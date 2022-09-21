@@ -5,6 +5,6 @@
 
 📫 how to reach me 
 
-- discord = Dauntlessik#7989
+- discord = dauntless#0001
 - steam = https://steamcommunity.com/id/justonlygod
 - website = https://dauntlessik1337.github.io/
