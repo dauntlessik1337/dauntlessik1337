@@ -8,3 +8,4 @@
 - discord = dauntless#0001
 - steam = https://steamcommunity.com/id/justonlygod
 - website = https://dauntlessik1337.github.io/
+- email = szymon.rogus@gmail.com
