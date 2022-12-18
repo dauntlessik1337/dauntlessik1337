@@ -5,7 +5,5 @@
 
 📫 how to reach me 
 
-- discord = [dauntless#0001](https://discord.com/users/359044328494071808)
-- steam = https://steamcommunity.com/id/justonlygod
-- website = https://dauntlessik1337.github.io/
-- email = szymon.rogus@gmail.com
+- discord = [amore#5819](https://discord.com/users/359044328494071808)
+- steam = https://steamcommunity.com/id/l9ratirl
