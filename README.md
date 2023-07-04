@@ -5,5 +5,5 @@
 
 📫 how to reach me 
 
-- discord = [dauntlessik / dauntless#3373](https://discord.com/users/1078426380217364551)
+- discord = [dauntlessik](https://discord.com/users/1078426380217364551)
 - steam = https://steamcommunity.com/id/l9ratirl
