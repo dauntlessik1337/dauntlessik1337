@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartCopy.AI - Usługi AI dla Twojego Biznesu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <header class="bg-white shadow p-6">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">SmartCopy.AI</h1>
+      <nav>
+        <a href="#uslugi" class="ml-6 text-gray-700 hover:text-blue-600">Usługi</a>
+        <a href="#kontakt" class="ml-6 text-gray-700 hover:text-blue-600">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="text-center py-16 px-4 bg-blue-50">
+    <h2 class="text-4xl font-bold mb-4">Tworzymy treści i grafiki z pomocą AI</h2>
+    <p class="text-lg text-gray-700 mb-6">Zamów opisy, CV lub grafiki bez stresu i bez czekania. Szybko, tanio, profesjonalnie.</p>
+    <a href="#uslugi" class="bg-blue-600 text-white px-6 py-3 rounded-full text-lg hover:bg-blue-700 transition">Zobacz ofertę</a>
+  </section>
+
+  <section id="uslugi" class="max-w-6xl mx-auto py-16 px-4">
+    <h3 class="text-3xl font-bold text-center mb-12">Nasze usługi</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" x-data="{ services: [
+      { title: '✍️ Opisy produktów', description: '5 zoptymalizowanych opisów gotowych do sklepu lub SEO.', price: '39 zł', amount: 3900, id: 'opis' },
+      { title: '📄 CV + list motywacyjny', description: 'Gotowe pliki PDF na podstawie Twoich danych.', price: '69 zł', amount: 6900, id: 'cv' },
+      { title: '🖼️ Grafika do posta', description: 'Szybko wygenerowana grafika pod social media.', price: '29 zł', amount: 2900, id: 'grafika' }
+    ] }">
+      <template x-for="service in services" :key="service.title">
+        <div class="bg-white p-6 rounded-2xl shadow flex flex-col justify-between">
+          <div>
+            <h4 class="text-xl font-semibold mb-2" x-text="service.title"></h4>
+            <p class="text-gray-600 mb-4" x-text="service.description"></p>
+            <p class="font-bold mb-4" x-text="service.price"></p>
+          </div>
+          <button 
+            class="mt-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            @click="pay(service)">
+            Zamów i zapłać
+          </button>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <section id="kontakt" class="bg-gray-100 py-16 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-6">Zamów usługę</h3>
+      <p class="text-gray-700 mb-8">Wypełnij formularz, a my odezwiemy się w ciągu 24h z gotową realizacją lub pytaniami.</p>
+      <form name="kontakt" method="POST" data-netlify="true" class="bg-white p-6 rounded-2xl shadow space-y-4 text-left">
+        <input type="hidden" name="form-name" value="kontakt">
+        <label class="block">
+          <span class="text-gray-700">Imię i nazwisko</span>
+          <input type="text" name="name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
+        </label>
+        <label class="block">
+          <span class="text-gray-700">Email</span>
+          <input type="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
+        </label>
+        <label class="block">
+          <span class="text-gray-700">Jaką usługę wybierasz?</span>
+          <select name="usluga" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+            <option>Opisy produktów</option>
+            <option>CV + list motywacyjny</option>
+            <option>Grafika do posta</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-gray-700">Szczegóły zamówienia</span>
+          <textarea name="wiadomosc" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+        </label>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Wyślij</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="text-center text-sm text-gray-500 py-6">
+    © 2025 SmartCopy.AI – Usługi AI na zamówienie
+  </footer>
+
+  <script>
+    function pay(service) {
+      const stripe = Stripe('pk_test_TWÓJ_PUBLICZNY_KLUCZ_STRIPE');
+
+      fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: service.amount,
+          name: service.title,
+          id: service.id
+        })
+      })
+      .then(res => res.json())
+      .then(session => {
+        stripe.redirectToCheckout({ sessionId: session.id });
+      });
+    }
+  </script>
+</body>
+</html>
